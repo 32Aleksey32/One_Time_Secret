@@ -1,0 +1,49 @@
+version: '3.9'
+
+services:
+
+  nginx:
+    image: nginx
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/conf.d/nginx.conf
+      - static_value:/var/html/static/
+
+  db:
+    image: postgres
+    volumes:
+      - postgres:/var/lib/postgresql/data/
+    env_file:
+      - ./.env
+
+  redis:
+    image: redis
+    restart: always
+    volumes:
+      - redis:/data
+
+  backend:
+    build:
+      context: ./onetimesecret
+      dockerfile: Dockerfile
+    restart: always
+    ports:
+      - "8000:8000"
+    command: > 
+      bash -c "python manage.py makemigrations && 
+      python manage.py migrate && 
+      python manage.py collectstatic --noinput &&
+      gunicorn --bind 0:8000 onetimesecret.wsgi"
+    volumes:
+      - static_value:/app/static/
+    depends_on:
+      - db
+    env_file:
+      - ./.env
+
+
+volumes:
+  static_value:
+  postgres:
+  redis:
