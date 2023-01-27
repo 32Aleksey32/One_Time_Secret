@@ -20,6 +20,14 @@
    ```
     https://github.com/32Aleksey32/One_time_secret
    ```
+- Создайте файл .env в корне проекта с данными:
+  ```
+  - NAME=test_db
+  - USER=postgres
+  - PASSWORD=postgres
+  - HOST=localhost
+  - PORT=5432
+  ```
 - Создайте и запустите контейнеры:
    ```
     docker-compose up
