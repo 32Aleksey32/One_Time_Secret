@@ -22,11 +22,12 @@
    ```
 - Создайте файл .env в корне проекта с данными:
   ```
-  - NAME=test_db
-  - USER=postgres
-  - PASSWORD=postgres
-  - HOST=localhost
-  - PORT=5432
+  DB_ENGINE=django.db.backends.postgresql
+  DB_NAME=postgres
+  POSTGRES_USER=postgres
+  POSTGRES_PASSWORD=postgres
+  DB_HOST=db
+  DB_PORT=5432
   ```
 - Создайте и запустите контейнеры:
    ```
